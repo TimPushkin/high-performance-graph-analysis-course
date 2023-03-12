@@ -1,0 +1,135 @@
+{
+  "test_bfs_incorrect_inputs": [
+    {
+      "description": "wrong adjacency matrix type",
+      "matrix_type": "INT64",
+      "graph": [[1]],
+      "start": 0
+    },
+    {
+      "description": "adjacency matrix not square",
+      "matrix_type": "BOOL",
+      "graph": [[1, 0]],
+      "start": 0
+    },
+    {
+      "description": "start index out of range",
+      "matrix_type": "BOOL",
+      "graph": [
+        [1, 0],
+        [1, 0]
+      ],
+      "start": 2
+    },
+    {
+      "description": "start index out of range for empty graph",
+      "matrix_type": "BOOL",
+      "graph": [],
+      "start": 0
+    }
+  ],
+  "test_bfs_correct_inputs": [
+    {
+      "description": "single vertex",
+      "graph": [
+        [0]
+      ],
+      "start": 0,
+      "expected": [0]
+    },
+    {
+      "description": "self loop",
+      "graph": [
+        [1]
+      ],
+      "start": 0,
+      "expected": [0]
+    },
+    {
+      "description": "single edge",
+      "graph": [
+        [0, 1],
+        [0, 0]
+      ],
+      "start": 0,
+      "expected": [0, 1]
+    },
+    {
+      "description": "linear graph",
+      "graph": [
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1],
+        [0, 0, 0, 0]
+      ],
+      "start": 0,
+      "expected": [0, 1, 2, 3]
+    },
+    {
+      "description": "linear graph with self cycles",
+      "graph": [
+        [1, 1, 0, 0],
+        [0, 1, 1, 0],
+        [0, 0, 1, 1],
+        [0, 0, 0, 1]
+      ],
+      "start": 0,
+      "expected": [0, 1, 2, 3]
+    },
+    {
+      "description": "two cycles",
+      "graph": [
+        [0, 0, 1, 0],
+        [1, 0, 0, 0],
+        [0, 1, 0, 1],
+        [0, 1, 0, 0]
+      ],
+      "start": 2,
+      "expected": [2, 1, 0, 1]
+    },
+    {
+      "description": "unreachable vertex",
+      "graph": [
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1],
+        [0, 0, 0, 0]
+      ],
+      "start": 1,
+      "expected": [-1, 0, 1, 2]
+    },
+    {
+      "description": "not connected cliques",
+      "graph": [
+        [1, 1, 0, 0],
+        [1, 1, 0, 0],
+        [0, 0, 1, 1],
+        [0, 0, 1, 1]
+      ],
+      "start": 1,
+      "expected": [1, 0, -1, -1]
+    },
+    {
+      "description": "clique",
+      "graph": [
+        [1, 1, 1, 1],
+        [1, 1, 1, 1],
+        [1, 1, 1, 1],
+        [1, 1, 1, 1]
+      ],
+      "start": 2,
+      "expected": [1, 1, 0, 1]
+    },
+    {
+      "description": "random graph",
+      "graph": [
+        [0, 1, 0, 1],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 1, 0]
+      ],
+      "start": 0,
+      "expected": [0, 1, 2, 1]
+    }
+  ]
+}
