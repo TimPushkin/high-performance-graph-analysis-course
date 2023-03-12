@@ -88,6 +88,28 @@
       "expected": [2, 1, 0, 1]
     },
     {
+      "description": "two cycles sparse",
+      "graph": [
+        [null, null, 1, null],
+        [1, null, null, null],
+        [null, 1, null, 1],
+        [null, 1, null, null]
+      ],
+      "start": 2,
+      "expected": [2, 1, 0, 1]
+    },
+    {
+      "description": "two cycles semi-sparse",
+      "graph": [
+        [0, null, 1, null],
+        [1, null, 0, 0],
+        [null, 1, 0, 1],
+        [null, 1, 0, null]
+      ],
+      "start": 2,
+      "expected": [2, 1, 0, 1]
+    },
+    {
       "description": "unreachable vertex",
       "graph": [
         [0, 1, 0, 0],
@@ -127,6 +149,17 @@
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 1, 0]
+      ],
+      "start": 0,
+      "expected": [0, 1, 2, 1]
+    },
+    {
+      "description": "random graph semi-sparse",
+      "graph": [
+        [0, 1, null, 1],
+        [null, 0, null, null],
+        [null, null, null, 0],
+        [null, 0, 1, null]
       ],
       "start": 0,
       "expected": [0, 1, 2, 1]

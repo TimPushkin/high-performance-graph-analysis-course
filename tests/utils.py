@@ -48,12 +48,16 @@ def load_test_ids(
 def matrix_from_dense_list(
     vs: list[list], typ: gb.types.MetaType = gb.types.BOOL
 ) -> gb.Matrix:
-    if len(vs) > 0:
-        return gb.Matrix.from_lists(
-            [row for row in range(len(vs)) for _ in range(len(vs[0]))],
-            [col for _ in range(len(vs)) for col in range(len(vs[0]))],
-            [v for row in vs for v in row],
-            typ=typ,
-        )
-    else:
+    if len(vs) == 0:
         return gb.Matrix.sparse(typ, 0, 0)
+
+    rows = []
+    cols = []
+    vals = []
+    for i, row in enumerate(vs):
+        for j, v in enumerate(row):
+            if v is not None:
+                rows.append(i)
+                cols.append(j)
+                vals.append(v)
+    return gb.Matrix.from_lists(rows, cols, vals, typ=typ)

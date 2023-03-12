@@ -30,7 +30,7 @@ def bfs(graph: gb.Matrix, start: int) -> list[int]:
 
         front.vxm(graph, out=front)
 
-        new_visited_mask = front.eadd(steps.S, add_op=gb.BOOL.GT)
+        new_visited_mask = front.eadd(steps.S, add_op=gb.BOOL.GT, mask=front.S)
         steps.assign_scalar(step, mask=new_visited_mask)
         step += 1
 
