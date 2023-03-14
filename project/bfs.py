@@ -25,16 +25,9 @@ def bfs(graph: gb.Matrix, start: int) -> list[int]:
     front[start] = True
 
     step = 1
-    while True:
-        old_steps_nvals = steps.nvals
-
-        front.vxm(graph, out=front)
-
-        new_visited_mask = front.eadd(steps.S, add_op=gb.BOOL.GT, mask=front.S)
-        steps.assign_scalar(step, mask=new_visited_mask)
+    while front.reduce():
+        front.vxm(graph, out=front, mask=steps.S, desc=gb.descriptor.RC)
+        steps.assign_scalar(step, mask=front)
         step += 1
-
-        if steps.nvals == old_steps_nvals:
-            break
 
     return [steps.get(i, default=-1) for i in range(steps.size)]
