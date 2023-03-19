@@ -62,7 +62,6 @@ def msbfs(graph: gb.Matrix, starts: Collection[int]) -> list[tuple[int, list[int
         parents[row, start] = -1
         front[row, start] = start
 
-    idx = _create_idx(nrows=len(starts), ncols=graph.ncols)
     while front.nvals > 0:
         front.mxm(
             graph,
@@ -72,20 +71,9 @@ def msbfs(graph: gb.Matrix, starts: Collection[int]) -> list[tuple[int, list[int
             desc=gb.descriptor.RC,
         )
         parents.assign(front, mask=front.S)
-        # pygraphblas doesn't seem to support index-unary operators, so have to use an
-        # explicit matrix with indices
-        front.assign(idx, mask=front.S)
+        front.apply(gb.INT64.POSITIONJ, out=front, mask=front.S)
 
     return [
         (start, [parents.get(row, col, default=-2) for col in range(graph.ncols)])
         for row, start in enumerate(starts)
     ]
-
-
-def _create_idx(nrows: int, ncols: int) -> gb.Matrix:
-    idx = gb.Matrix.sparse(gb.INT64, nrows, ncols)
-    if nrows > 0 and ncols > 0:
-        idx_row = gb.Vector.from_list(list(range(ncols)))
-        for row in range(nrows):
-            idx.assign_row(row, idx_row)
-    return idx
