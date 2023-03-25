@@ -1,0 +1,199 @@
+{
+  "test_incorrect_inputs": [
+    {
+      "description": "wrong adjacency matrix type",
+      "matrix_type": "INT64",
+      "graph": [[1]]
+    },
+    {
+      "description": "adjacency matrix not square",
+      "matrix_type": "BOOL",
+      "graph": [[1, 0]]
+    }
+  ],
+  "test_per_vertex": [
+    {
+      "description": "empty graph",
+      "graph": [],
+      "expected": []
+    },
+    {
+      "description": "no edges",
+      "graph": [
+        [0]
+      ],
+      "expected": [0]
+    },
+    {
+      "description": "self loop",
+      "graph": [
+        [1]
+      ],
+      "expected": [1]
+    },
+    {
+      "description": "single triangle",
+      "graph": [
+        [null, 1, 1],
+        [1, 0, 1],
+        [1, 1, null]
+      ],
+      "expected": [1, 1, 1]
+    },
+    {
+      "description": "triangles with a self-loop part",
+      "graph": [
+        [1, 1],
+        [1, 0]
+      ],
+      "expected": [2, 1]
+    },
+    {
+      "description": "full graph",
+      "graph": [
+        [1, 1, 1],
+        [1, 1, 1],
+        [1, 1, 1]
+      ],
+      "expected": [5, 5, 5]
+    },
+    {
+      "description": "no triangles",
+      "graph": [
+        [0, 1, 1, 1, 1],
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0]
+      ],
+      "expected": [0, 0, 0, 0, 0]
+    },
+    {
+      "description": "several triangles",
+      "graph": [
+        [0, 1, 1, 1, 1],
+        [1, 0, 1, 1, 1],
+        [1, 1, null, null, null],
+        [1, 1, null, null, null],
+        [1, 1, null, null, null]
+      ],
+      "expected": [3, 3, 1, 1, 1]
+    },
+    {
+      "description": "vertex without a triangle",
+      "graph": [
+        [0, 1, null, null],
+        [1, 0, 1, 1],
+        [null, 1, 0, 1],
+        [null, 1, 1, 0]
+      ],
+      "expected": [0, 1, 1, 1]
+    },
+    {
+      "description": "bigger graph",
+      "graph": [
+        [null, 1, null, 1, null, null, null],
+        [1, null, null, 1, 1, null, 1],
+        [null, null, null, 1, null, 1, 1],
+        [1, 1, 1, null, null, 1, 1],
+        [null, 1, null, null, null, 1, 1],
+        [null, null, 1, 1, 1, null, null],
+        [null, 1, 1, 1, 1, null, null]
+      ],
+      "expected": [1, 3, 2, 4, 1, 1, 3]
+    }
+  ],
+  "test_overall": [
+    {
+      "description": "empty graph",
+      "graph": [],
+      "expected_cohen": 0,
+      "expected_sandia": 0
+    },
+    {
+      "description": "no edges",
+      "graph": [
+        [0]
+      ],
+      "expected_cohen": 0,
+      "expected_sandia": 0
+    },
+    {
+      "description": "self loop",
+      "graph": [
+        [1]
+      ],
+      "expected_cohen": 1,
+      "expected_sandia": 1
+    },
+    {
+      "description": "single triangle",
+      "graph": [
+        [null, 1, 1],
+        [1, 0, 1],
+        [1, 1, null]
+      ],
+      "expected_cohen": 1,
+      "expected_sandia": 1
+    },
+    {
+      "description": "full graph",
+      "graph": [
+        [1, 1, 1],
+        [1, 1, 1],
+        [1, 1, 1]
+      ],
+      "expected_cohen": 7,
+      "expected_sandia": 10
+    },
+    {
+      "description": "no triangles",
+      "graph": [
+        [0, 1, 1, 1, 1],
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0]
+      ],
+      "expected_cohen": 0,
+      "expected_sandia": 0
+    },
+    {
+      "description": "several triangles",
+      "graph": [
+        [0, 1, 1, 1, 1],
+        [1, 0, 1, 1, 1],
+        [1, 1, null, null, null],
+        [1, 1, null, null, null],
+        [1, 1, null, null, null]
+      ],
+      "expected_cohen": 3,
+      "expected_sandia": 3
+    },
+    {
+      "description": "vertex without a triangle",
+      "graph": [
+        [0, 1, null, null],
+        [1, 0, 1, 1],
+        [null, 1, 0, 1],
+        [null, 1, 1, 0]
+      ],
+      "expected_cohen": 1,
+      "expected_sandia": 1
+    },
+    {
+      "description": "bigger graph",
+      "graph": [
+        [null, 1, null, 1, null, null, null],
+        [1, null, null, 1, 1, null, 1],
+        [null, null, null, 1, null, 1, 1],
+        [1, 1, 1, null, null, 1, 1],
+        [null, 1, null, null, null, 1, 1],
+        [null, null, 1, 1, 1, null, null],
+        [null, 1, 1, 1, 1, null, null]
+      ],
+      "expected_cohen": 5,
+      "expected_sandia": 5
+    }
+  ]
+}
