@@ -1,0 +1,78 @@
+{
+  "test_is_undirected": [
+    {
+      "description": "empty graph",
+      "matrix_type": "BOOL",
+      "graph": [],
+      "expected": true
+    },
+    {
+      "description": "no edges",
+      "matrix_type": "BOOL",
+      "graph": [
+        [0]
+      ],
+      "expected": true
+    },
+    {
+      "description": "undirected",
+      "matrix_type": "BOOL",
+      "graph": [
+        [0, 1, 1],
+        [1, 1, 0],
+        [1, 0, 0]
+      ],
+      "expected": true
+    },
+    {
+      "description": "undirected semi-sparse",
+      "matrix_type": "BOOL",
+      "graph": [
+        [null, 1, 0],
+        [1, 1, null],
+        [null, 0, 0]
+      ],
+      "expected": true
+    },
+    {
+      "description": "directed",
+      "matrix_type": "BOOL",
+      "graph": [
+        [0, 1, 1],
+        [1, 1, 0],
+        [0, 0, 0]
+      ],
+      "expected": false
+    },
+    {
+      "description": "directed semi-sparse",
+      "matrix_type": "BOOL",
+      "graph": [
+        [0, 1, 1],
+        [1, 1, 0],
+        [null, 0, 0]
+      ],
+      "expected": false
+    },
+    {
+      "description": "non-bool undirected",
+      "matrix_type": "INT64",
+      "graph": [
+        [0, 1, 2],
+        [1, -1, null],
+        [2, null, null]
+      ],
+      "expected": true
+    },
+    {
+      "description": "non-bool directed",
+      "matrix_type": "INT64",
+      "graph": [
+        [0, 1, 2],
+        [1, -1, null],
+        [3, null, null]
+      ],
+      "expected": false
+    }
+  ]
+}
