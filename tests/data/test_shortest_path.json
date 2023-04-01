@@ -1,0 +1,346 @@
+{
+  "test_sssp_incorrect_inputs": [
+    {
+      "description": "wrong adjacency matrix type",
+      "matrix_type": "BOOL",
+      "graph": [[false]],
+      "start": 0
+    },
+    {
+      "description": "adjacency matrix not square",
+      "matrix_type": "FP64",
+      "graph": [[0, 1]],
+      "start": 0
+    },
+    {
+      "description": "start index out of range",
+      "matrix_type": "FP64",
+      "graph": [
+        [0, 1],
+        [1, 0]
+      ],
+      "start": 2
+    },
+    {
+      "description": "start index out of range for empty graph",
+      "matrix_type": "FP64",
+      "graph": [],
+      "start": 0
+    },
+    {
+      "description": "negative cycle",
+      "matrix_type": "FP64",
+      "graph": [
+        [0, -1],
+        [-1, 0]
+      ],
+      "start": 0
+    }
+  ],
+  "test_mssp_incorrect_inputs": [
+    {
+      "description": "wrong adjacency matrix type",
+      "matrix_type": "BOOL",
+      "graph": [[false]],
+      "starts": [0]
+    },
+    {
+      "description": "adjacency matrix not square",
+      "matrix_type": "FP64",
+      "graph": [[0, 1]],
+      "starts": [0]
+    },
+    {
+      "description": "start index out of range",
+      "matrix_type": "FP64",
+      "graph": [
+        [0, 0],
+        [1, 0]
+      ],
+      "starts": [0, 2]
+    },
+    {
+      "description": "start index out of range for empty graph",
+      "matrix_type": "FP64",
+      "graph": [],
+      "starts": [0]
+    },
+    {
+      "description": "negative cycle",
+      "matrix_type": "FP64",
+      "graph": [
+        [0, -1],
+        [-1, 0]
+      ],
+      "starts": [0]
+    }
+  ],
+  "test_apsp_incorrect_inputs": [
+    {
+      "description": "wrong adjacency matrix type",
+      "matrix_type": "BOOL",
+      "graph": [[false]],
+      "starts": [0]
+    },
+    {
+      "description": "adjacency matrix not square",
+      "matrix_type": "FP64",
+      "graph": [[0, 1]],
+      "starts": [0]
+    },
+    {
+      "description": "negative cycle",
+      "matrix_type": "FP64",
+      "graph": [
+        [0, -1],
+        [-1, 0]
+      ],
+      "start": 0
+    }
+  ],
+  "test_sssp_correct_inputs": [
+    {
+      "description": "single vertex",
+      "graph": [
+        [0]
+      ],
+      "start": 0,
+      "expected": [0]
+    },
+    {
+      "description": "single edge",
+      "graph": [
+        [0, 0.1],
+        [null, 0]
+      ],
+      "start": 0,
+      "expected": [0, 0.1]
+    },
+    {
+      "description": "linear graph",
+      "graph": [
+        [0, 1, null, null],
+        [null, 0, 1, null],
+        [null, null, 0, 1],
+        [null, null, null, 0]
+      ],
+      "start": 1,
+      "expected": ["Infinity", 0, 1, 2]
+    },
+    {
+      "description": "linear graph semi-sparse",
+      "graph": [
+        [0, 1, null, "Infinity"],
+        ["Infinity", 0, 1, null],
+        [null, "Infinity", 0, 1],
+        ["Infinity", null, "Infinity", 0]
+      ],
+      "start": 1,
+      "expected": ["Infinity", 0, 1, 2]
+    },
+    {
+      "description": "negative edges",
+      "graph": [
+        [0, null, -1],
+        [null, 0, null],
+        [1, 1, 0]
+      ],
+      "start": 0,
+      "expected": [0, 0, -1]
+    },
+    {
+      "description": "random graph",
+      "graph": [
+        [0, 0.3, null, 0.8, null, null, null],
+        [null, 0, null, null, 0.1, null, 0.7],
+        [null, null, 0, null, null, 0.5, null],
+        [0.2, null, 0.4, 0, null, null, null],
+        [null, null, null, null, 0, 0.1, null],
+        [null, null, 0.5, null, null, 0, null],
+        [null, null, 0.1, 0.5, 0.9, null, 0]
+      ],
+      "start": 0,
+      "expected": [0, 0.3, 1, 0.8, 0.4, 0.5, 1]
+    }
+  ],
+  "test_mssp_correct_inputs": [
+    {
+      "description": "empty graph and starts",
+      "graph": [],
+      "starts": [],
+      "expected": []
+    },
+    {
+      "description": "single edge",
+      "graph": [
+        [0, 0.1],
+        [null, 0]
+      ],
+      "starts": [0, 1],
+      "expected": [
+        [0, [0, 0.1]],
+        [1, ["Infinity", 0]]
+      ]
+    },
+    {
+      "description": "linear graph",
+      "graph": [
+        [0, 1, null, null],
+        [null, 0, 1, null],
+        [null, null, 0, 1],
+        [null, null, null, 0]
+      ],
+      "starts": [0, 3, 2, 1],
+      "expected": [
+        [0, [0, 1, 2, 3]],
+        [3, ["Infinity", "Infinity", "Infinity", 0]],
+        [2, ["Infinity", "Infinity", 0, 1]],
+        [1, ["Infinity", 0, 1, 2]]
+      ]
+    },
+    {
+      "description": "linear graph semi-sparse",
+      "graph": [
+        [0, 1, null, "Infinity"],
+        ["Infinity", 0, 1, null],
+        [null, "Infinity", 0, 1],
+        ["Infinity", null, "Infinity", 0]
+      ],
+      "starts": [0, 3, 2, 1],
+      "expected": [
+        [0, [0, 1, 2, 3]],
+        [3, ["Infinity", "Infinity", "Infinity", 0]],
+        [2, ["Infinity", "Infinity", 0, 1]],
+        [1, ["Infinity", 0, 1, 2]]
+      ]
+    },
+    {
+      "description": "repeating start",
+      "graph": [
+        [0, 1, null, null],
+        [null, 0, 1, null],
+        [null, null, 0, 1],
+        [null, null, null, 0]
+      ],
+      "starts": [1, 1],
+      "expected": [
+        [1, ["Infinity", 0, 1, 2]],
+        [1, ["Infinity", 0, 1, 2]]
+      ]
+    },
+    {
+      "description": "negative edges",
+      "graph": [
+        [0, null, -1],
+        [null, 0, null],
+        [1, 1, 0]
+      ],
+      "starts": [0, 1, 2],
+      "expected": [
+        [0, [0, 0, -1]],
+        [1, ["Infinity", 0, "Infinity"]],
+        [2, [1, 1, 0]]
+      ]
+    },
+    {
+      "description": "random graph",
+      "graph": [
+        [0, 0.3, null, 0.8, null, null, null],
+        [null, 0, null, null, 0.1, null, 0.7],
+        [null, null, 0, null, null, 0.5, null],
+        [0.2, null, 0.4, 0, null, null, null],
+        [null, null, null, null, 0, 0.1, null],
+        [null, null, 0.5, null, null, 0, null],
+        [null, null, 0.1, 0.5, 0.9, null, 0]
+      ],
+      "starts": [0, 2, 6],
+      "expected": [
+        [0, [0, 0.3, 1, 0.8, 0.4, 0.5, 1]],
+        [2, ["Infinity", "Infinity", 0, "Infinity", "Infinity", 0.5, "Infinity"]],
+        [6, [0.7, 1, 0.1, 0.5, 0.9, 0.6, 0]]
+      ]
+    }
+  ],
+  "test_apsp_correct_inputs": [
+    {
+      "description": "empty graph",
+      "graph": [],
+      "expected": []
+    },
+    {
+      "description": "single edge",
+      "graph": [
+        [0, 0.1],
+        [null, 0]
+      ],
+      "expected": [
+        [0, [0, 0.1]],
+        [1, ["Infinity", 0]]
+      ]
+    },
+    {
+      "description": "linear graph",
+      "graph": [
+        [0, 1, null, null],
+        [null, 0, 1, null],
+        [null, null, 0, 1],
+        [null, null, null, 0]
+      ],
+      "expected": [
+        [0, [0, 1, 2, 3]],
+        [1, ["Infinity", 0, 1, 2]],
+        [2, ["Infinity", "Infinity", 0, 1]],
+        [3, ["Infinity", "Infinity", "Infinity", 0]]
+      ]
+    },
+    {
+      "description": "linear graph semi-sparse",
+      "graph": [
+        [0, 1, null, "Infinity"],
+        ["Infinity", 0, 1, null],
+        [null, "Infinity", 0, 1],
+        ["Infinity", null, "Infinity", 0]
+      ],
+      "expected": [
+        [0, [0, 1, 2, 3]],
+        [1, ["Infinity", 0, 1, 2]],
+        [2, ["Infinity", "Infinity", 0, 1]],
+        [3, ["Infinity", "Infinity", "Infinity", 0]]
+      ]
+    },
+    {
+      "description": "negative edges",
+      "graph": [
+        [0, null, -1],
+        [null, 0, null],
+        [1, 1, 0]
+      ],
+      "expected": [
+        [0, [0, 0, -1]],
+        [1, ["Infinity", 0, "Infinity"]],
+        [2, [1, 1, 0]]
+      ]
+    },
+    {
+      "description": "random graph",
+      "graph": [
+        [0, 0.3, null, 0.8, null, null, null],
+        [null, 0, null, null, 0.1, null, 0.7],
+        [null, null, 0, null, null, 0.5, null],
+        [0.2, null, 0.4, 0, null, null, null],
+        [null, null, null, null, 0, 0.1, null],
+        [null, null, 0.5, null, null, 0, null],
+        [null, null, 0.1, 0.5, 0.9, null, 0]
+      ],
+      "expected": [
+        [0, [0, 0.3, 1, 0.8, 0.4, 0.5, 1]],
+        [1, [1.4, 0, 0.7, 1.2, 0.1, 0.2, 0.7]],
+        [2, ["Infinity", "Infinity", 0, "Infinity", "Infinity", 0.5, "Infinity"]],
+        [3, [0.2, 0.5, 0.4, 0, 0.6, 0.7, 1.2]],
+        [4, ["Infinity", "Infinity", 0.6, "Infinity", 0, 0.1, "Infinity"]],
+        [5, ["Infinity", "Infinity", 0.5, "Infinity", "Infinity", 0, "Infinity"]],
+        [6, [0.7, 1, 0.1, 0.5, 0.9, 0.6, 0]]
+      ]
+    }
+  ]
+}
