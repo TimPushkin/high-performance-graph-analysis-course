@@ -1,4 +1,6 @@
 black
+boltons
+networkx
 pre-commit
 pygraphblas
 pytest
